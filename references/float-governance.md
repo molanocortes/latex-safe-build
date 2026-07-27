@@ -1,8 +1,8 @@
 # Float governance
 
-Tested settings and fixes for the three float problems that quietly degrade large
-documents. Apply when diagnosing layout complaints, not preemptively on documents
-that look fine.
+Settings and fixes, proven in long use on a large figure-heavy document, for the
+three float problems that quietly degrade large documents. Apply when diagnosing
+layout complaints, not preemptively on documents that look fine.
 
 ## Preamble block: make placement deterministic
 
@@ -11,6 +11,8 @@ that look fine.
 \usepackage{flafter}
 % Keep floats inside their own section.
 \usepackage[section]{placeins}
+% Provides the [H] placement used in the fixes below.
+\usepackage{float}
 % Let pages be mostly-float instead of pushing floats to the end.
 \renewcommand{\topfraction}{0.85}
 \renewcommand{\bottomfraction}{0.7}
@@ -59,15 +61,3 @@ The orphan-figure page pattern. Force the figure to stay with its paragraph:
 `\Needspace{16\baselineskip}` starts a fresh page early only when fewer than 16
 lines remain, so the figure and its intro paragraph move together instead of
 splitting. Tune the multiplier to roughly the figure height in lines.
-
-## When cutting text to save pages
-
-Two observations from shortening a large document that generalize:
-
-- Mid-chapter word cuts often save zero pages, because float placement pins the
-  page boundaries. The productive targets are **chapter-tail orphans**: chapters
-  whose last page holds only a few lines. Collapsing those spill pages saves whole
-  pages at once.
-- After any cut, verify structure survived: compare per-chapter counts of
-  `\label`, `\includegraphics`, `\cite`-family, `\cref`-family and headings before
-  and after. Identical counts prove only prose was cut.
