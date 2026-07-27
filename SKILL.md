@@ -7,7 +7,7 @@ description: Compile LaTeX documents in an isolated scratch copy so a build can 
 
 Build LaTeX documents without ever running the compiler inside the working tree.
 
-## The doctrine, in one paragraph
+## Why builds are isolated
 
 `latexmk` writes dozens of intermediates (`.aux`, `.bcf`, `.toc`, `.fls`, ...) into
 the directory it runs in. If anything touches that directory during the build (an
@@ -56,8 +56,8 @@ loud by design: no root file found, or several plausible ones, is an error
 naming the candidates, never a silent guess.
 
 On failure the script prints a short triage (the actual TeX error block, biber
-errors, and actionable hints), not the whole log; the full log path is printed
-with it. Interpret triage lines with `references/troubleshooting.md`.
+errors, and hints), not the whole log; the full log path is printed with it.
+Interpret triage lines with `references/troubleshooting.md`.
 
 ## Page counts: report the number that matters
 

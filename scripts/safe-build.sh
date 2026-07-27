@@ -57,6 +57,7 @@ if [ -z "$MAIN" ]; then
       CANDIDATES="$CANDIDATES ${f##*/}"
     fi
   done
+  # shellcheck disable=SC2086  # word splitting is the point; no-space names only
   set -- $CANDIDATES
   case $# in
     0) die "no root .tex found in $SRC (need \\documentclass + \\begin{document})" ;;
@@ -79,7 +80,7 @@ if [ -z "$ENGINE" ]; then
   # TeXShop/TeXstudio magic comment in the first lines of the root file.
   MAGIC=$(head -5 "$SRC/$MAIN" \
     | sed -n 's/^%[[:space:]]*!*[Tt][Ee][Xx][[:space:]]*\([Tt][Ss]-\)*program[[:space:]]*=[[:space:]]*\([a-zA-Z]*\).*/\2/p' \
-    | head -1 | tr 'A-Z' 'a-z')
+    | head -1 | tr '[:upper:]' '[:lower:]')
   case "$MAGIC" in
     xelatex)  ENGINE="-xelatex";  ENGINE_WHY="magic comment" ;;
     lualatex) ENGINE="-lualatex"; ENGINE_WHY="magic comment" ;;

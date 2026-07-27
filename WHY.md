@@ -1,6 +1,6 @@
 # Why this exists
 
-This skill distills the build discipline that emerged from writing a large,
+This skill is the build discipline that emerged from writing a large,
 figure-heavy master's thesis (a PDF in the low hundreds of pages) with several AI
 agent sessions editing the LaTeX tree at the same time, over several weeks.
 
@@ -15,10 +15,10 @@ tree never held a build artifact again.
 
 Two more lessons rode along and are encoded here:
 
-- **Page counts**: the university counted text pages (first chapter through
+- Page counts: the university counted text pages (first chapter through
   conclusion), not PDF pages. Every build therefore reported both numbers, which
   turned "how long is it now?" from a manual ritual into a build byproduct.
-- **The stale wrapper**: at one point a leftover build script pointed at a frozen
+- The stale wrapper: at one point a leftover build script pointed at a frozen
   copy of the document and cheerfully rebuilt the wrong tree. Since then the rule
   is that a build tool must print what it resolved (source, main file, engine,
   output) on every run, so a wrong-tree build is visible in the first five lines.

@@ -3,7 +3,7 @@
 [![CI](https://github.com/molanocortes/latex-safe-build/actions/workflows/ci.yml/badge.svg)](https://github.com/molanocortes/latex-safe-build/actions/workflows/ci.yml)
 
 An [Agent Skill](https://code.claude.com/docs/en/skills) plus two standalone
-scripts that compile LaTeX **in an isolated scratch copy**, so a build can never
+scripts that compile LaTeX in an isolated scratch copy, so a build can never
 corrupt the document it is building.
 
 ## The problem
@@ -13,8 +13,8 @@ runs in. The moment anything else touches that tree during a build (an editor
 saving a chapter, an AI agent session, a file sync tool, a second build), the
 intermediates end up half-written and you get failures that look like source
 bugs: `File ended while scanning use of ...`, biber crashing on a malformed
-`.bcf`, storms of undefined references that were fine an hour ago, a PDF
-assembled from a stale table of contents.
+`.bcf`, undefined references that were fine an hour ago, a PDF assembled from a
+stale table of contents.
 
 This workflow came out of a large master's thesis written with multiple AI agent
 sessions editing the tree concurrently. In-tree builds corrupted state
@@ -46,15 +46,15 @@ float-governance reference, which is documentation, not code.
 - **Reports unresolved references.** After every successful build it prints a
   filtered list of undefined or multiply defined labels and citations, with
   rerun and font noise stripped, so real problems are not buried (test *a*).
-- **Triages failures.** On error you get the actual TeX error block and an
-  actionable hint, not a 2000-line log dump (test *f*); the full log path is
-  printed alongside. The pattern table is in
+- **Triages failures.** On error you get the actual TeX error block and a
+  hint, not a 2000-line log dump (test *f*); the full log path is printed
+  alongside. The pattern table is in
   [references/troubleshooting.md](references/troubleshooting.md).
 - **Reports the page count that matters.** `scripts/text_pages.py` prints both
-  the PDF total and the **text pages** (first chapter through conclusion, the
+  the PDF total and the text pages (first chapter through conclusion, the
   number page limits are checked against; test *b*). When it cannot find the
   boundaries it says so instead of guessing.
-- **Fixes float pathology.** [references/float-governance.md](references/float-governance.md)
+- **Documents float fixes.** [references/float-governance.md](references/float-governance.md)
   carries a preamble block, proven in long use, for deterministic float
   placement, plus fixes for bare-heading sections and orphaned figure pages.
 
@@ -94,21 +94,21 @@ Run the test suite (needs a full-ish TeX installation):
 tests/run_tests.sh
 ```
 
-## Limitations, honestly
+## Limitations
 
-- **Engines**: pdflatex, XeLaTeX, LuaLaTeX via latexmk. No ConTeXt, no plain
+- Engines: pdflatex, XeLaTeX, LuaLaTeX via latexmk. No ConTeXt, no plain
   TeX, no custom multi-pass toolchains beyond what latexmk orchestrates.
-- **Platforms**: developed and tested on macOS (MacTeX) and Linux (TeX Live, in
+- Platforms: developed and tested on macOS (MacTeX) and Linux (TeX Live, in
   CI). Windows is untested; the scripts are POSIX shell and would need WSL.
-- **Text-page detection** is heuristic (common English and German headings) and
-  falls back to an honest "not determined" rather than a guess. Pin exact
-  boundaries per project with `TEXT_START`/`TEXT_END` in the config file.
-- **Assets referenced outside the project root** (absolute or `../` paths) are
+- Text-page detection is heuristic (common English and German headings) and
+  falls back to "not determined" rather than a guess. Pin exact boundaries per
+  project with `TEXT_START`/`TEXT_END` in the config file.
+- Assets referenced outside the project root (absolute or `../` paths) are
   not copied into the isolated build; the script warns about them before
   building.
-- **Root-file auto-detection** expects filenames without spaces; pass the file
+- Root-file auto-detection expects filenames without spaces; pass the file
   explicitly otherwise.
-- The **race guard** matches on the latexmk process name, so two projects whose
+- The race guard matches on the latexmk process name, so two projects whose
   root files share a name can trigger a false refusal; wait or pass a distinct
   root filename.
 - This is not a LaTeX tutor: it builds and diagnoses; it does not write content.

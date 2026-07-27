@@ -20,7 +20,7 @@ directory mid-pipeline desynchronizes that state:
 - A **sync tool** (Dropbox, iCloud, git checkout) replaces files at arbitrary
   moments with the same effects.
 
-The insidious part: every symptom points at the *document*, not at the race. The
+The trap: every symptom points at the *document*, not at the race. The
 errors name your chapters and your citations, so the natural response is to "fix"
 the source, which changes nothing, or to delete `.aux` files, which appears to
 work because it forces a clean rebuild, until the race recurs. In a project with

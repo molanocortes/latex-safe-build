@@ -15,7 +15,7 @@ fail() { FAIL=$((FAIL+1)); printf 'FAIL: %s (%s)\n' "$1" "$2"; }
 skip() { SKIP=$((SKIP+1)); printf 'SKIP: %s (%s)\n' "$1" "$2"; }
 
 fresh() { # fresh <fixture> -> prints the temp workdir it copied it to
-  rm -rf "$WORK/$1"
+  rm -rf "${WORK:?}/$1"
   mkdir -p "$WORK"
   cp -R "$HERE/fixtures/$1" "$WORK/$1"
   printf '%s\n' "$WORK/$1"
