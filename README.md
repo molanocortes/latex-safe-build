@@ -1,3 +1,8 @@
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/header-dark.svg">
+  <img alt="latex-safe-build: LaTeX builds that cannot corrupt your tree. POSIX shell, agent skill, MIT. The working tree is rsynced into an isolated scratch copy where latexmk runs, and only the finished PDF comes back." src="docs/header-light.svg" width="100%">
+</picture>
+
 # latex-safe-build
 
 [![CI](https://github.com/molanocortes/latex-safe-build/actions/workflows/ci.yml/badge.svg)](https://github.com/molanocortes/latex-safe-build/actions/workflows/ci.yml)
@@ -88,10 +93,25 @@ Exit codes of `safe-build.sh`, for Makefile and CI wiring: `0` build succeeded,
 `1` build or setup error (triage printed), `2` refused because another latexmk
 for the same document is already running (safe to retry after it finishes).
 
-Run the test suite (needs a full-ish TeX installation):
+Run the test suite (needs a full-ish TeX installation). Each fixture builds a real
+document and asserts one behaviour, including the two that matter most: *g* mutates
+a source file mid-build and checks the mutation never reaches the PDF, and *i*
+starts a second build of the same document and checks it is refused rather than
+allowed to race.
 
-```bash
-tests/run_tests.sh
+```console
+$ tests/run_tests.sh
+PASS: a-article
+PASS: b-report-biber
+PASS: c-fontspec
+PASS: d-minted
+PASS: e-multifile
+PASS: f-broken
+PASS: g-concurrency
+PASS: h-config
+PASS: i-race-guard
+
+9 passed, 0 failed, 0 skipped
 ```
 
 ## Limitations
