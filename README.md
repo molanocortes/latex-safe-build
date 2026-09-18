@@ -1,8 +1,3 @@
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/header-dark.svg">
-  <img alt="latex-safe-build: LaTeX builds that cannot corrupt your tree. POSIX shell, agent skill, MIT. The working tree is rsynced into an isolated scratch copy where latexmk runs, and only the finished PDF comes back." src="docs/header-light.svg" width="100%">
-</picture>
-
 # latex-safe-build
 
 [![CI](https://github.com/molanocortes/latex-safe-build/actions/workflows/ci.yml/badge.svg)](https://github.com/molanocortes/latex-safe-build/actions/workflows/ci.yml)
